@@ -91,3 +91,9 @@ Pour ce projet solo, j'utilise une approche **Kanban** simplifiée pour suivre l
 - **Done** : Initialisation API, Dockerisation, Orchestration Docker Compose, Persistance PostgreSQL, Architecture Model-Route.
 
 *Note : Les itérations sont quotidiennes avec un "Daily Stand-up" personnel pour valider les objectifs du jour.*
+
+---
+
+## 📄 Preuves DevOps
+Les sorties terminales validant le fonctionnement du projet sont disponibles dans le fichier [devops/EVIDENCE.md](devops/EVIDENCE.md).
+
