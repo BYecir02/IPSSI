@@ -40,6 +40,12 @@ Ce projet consiste en la création d'une API REST de gestion de tâches (Todo Ap
 - [x] Validation de la persistance des données entre différents conteneurs.
 - [x] Test de survie des données après suppression des conteneurs.
 
+### Étape 7 : Orchestration avec Docker Compose
+- [x] Création du fichier `docker-compose.yml`.
+- [x] Configuration d'un service API et d'un service PostgreSQL.
+- [x] Mise en place des volumes pour la persistance des données et des logs.
+- [ ] Migration du code vers une persistance SQL (en cours).
+
 ---
 
 ## 🛠️ Installation et Lancement (Local)
@@ -86,3 +92,16 @@ L'API sera accessible sur `http://localhost:3000`.
 | POST | `/api/tasks` | Créer une tâche |
 | PUT | `/api/tasks/:id` | Modifier une tâche |
 | DELETE| `/api/tasks/:id` | Supprimer une tâche |
+
+---
+
+## 📅 Gestion de Projet (Agile/Solo)
+
+Pour ce projet solo, j'utilise une approche **Kanban** simplifiée pour suivre l'avancement des tâches :
+
+- **To Do** : Tests unitaires, Tests d'intégration, CI/CD Pipeline.
+- **In Progress** : Finalisation de la documentation.
+- **Done** : Initialisation API, Dockerisation, Orchestration Docker Compose, Persistance PostgreSQL.
+
+*Note : Les itérations sont quotidiennes avec un "Daily Stand-up" personnel pour valider les objectifs du jour.*
+

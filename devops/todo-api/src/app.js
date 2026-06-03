@@ -3,8 +3,12 @@ const cors = require('cors');
 const helmet = require('helmet');
 const taskRoutes = require('./routes/tasks');
 const errorHandler = require('./middleware/errorHandler');
+const { initDb } = require('./db');
 
 const app = express();
+
+// Initialize Database
+initDb();
 
 // Middleware
 app.use(helmet());
