@@ -30,6 +30,11 @@ Ce projet consiste en la création d'une API REST de gestion de tâches (Todo Ap
 - [x] Build de l'image (`todo-api:1.0`).
 - [x] Lancement et validation du conteneur.
 
+### Étape 5 : Restructuration
+- [x] Création du dossier `devops/`.
+- [x] Déplacement de l'API et des ressources de cours dans `devops/`.
+- [x] Mise à jour de la documentation.
+
 ---
 
 ## 🛠️ Installation et Lancement (Local)
@@ -42,7 +47,7 @@ Ce projet consiste en la création d'une API REST de gestion de tâches (Todo Ap
 ### Installation & Lancement Classique
 1. Naviguer dans le dossier :
    ```bash
-   cd todo-api
+   cd devops/todo-api
    ```
 2. Installer les dépendances :
    ```bash
@@ -56,7 +61,7 @@ Ce projet consiste en la création d'une API REST de gestion de tâches (Todo Ap
 ### Lancement avec Docker
 1. Build l'image :
    ```bash
-   docker build -t todo-api:1.0 ./todo-api
+   docker build -t todo-api:1.0 ./devops/todo-api
    ```
 2. Lancer le conteneur :
    ```bash
