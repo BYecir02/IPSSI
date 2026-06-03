@@ -24,6 +24,12 @@ Ce projet consiste en la création d'une API REST de gestion de tâches (Todo Ap
     - `DELETE /api/tasks/:id` : Supprimer une tâche.
 - [x] Stockage temporaire des données en mémoire (tableau).
 
+### Étape 4 : Dockerisation (Image seule)
+- [x] Création du `.dockerignore`.
+- [x] Création du `Dockerfile` (Node.js 18 Alpine).
+- [x] Build de l'image (`todo-api:1.0`).
+- [x] Lancement et validation du conteneur.
+
 ---
 
 ## 🛠️ Installation et Lancement (Local)
@@ -31,8 +37,9 @@ Ce projet consiste en la création d'une API REST de gestion de tâches (Todo Ap
 ### Prérequis
 - Node.js (v18+)
 - npm
+- Docker
 
-### Installation
+### Installation & Lancement Classique
 1. Naviguer dans le dossier :
    ```bash
    cd todo-api
@@ -41,11 +48,20 @@ Ce projet consiste en la création d'une API REST de gestion de tâches (Todo Ap
    ```bash
    npm install
    ```
+3. Lancer :
+   ```bash
+   npm start
+   ```
 
-### Lancement
-```bash
-npm start
-```
+### Lancement avec Docker
+1. Build l'image :
+   ```bash
+   docker build -t todo-api:1.0 ./todo-api
+   ```
+2. Lancer le conteneur :
+   ```bash
+   docker run -d -p 3000:3000 --name todo-container todo-api:1.0
+   ```
 L'API sera accessible sur `http://localhost:3000`.
 
 ---
