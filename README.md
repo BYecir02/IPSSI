@@ -2,7 +2,7 @@
 
 Ce projet consiste en la création d'une API REST de gestion de tâches (Todo App) développée avec Node.js, conteneurisée avec Docker et orchestrée avec Docker Compose.
 
-## 🚀 Journal de progression
+## Journal de progression
 
 ### Étape 1 : Initialisation et Structure
 - [x] Création de l'arborescence du projet (`src/routes`, `src/models`, `src/middleware`).
@@ -44,45 +44,32 @@ Ce projet consiste en la création d'une API REST de gestion de tâches (Todo Ap
 - [x] Création du fichier `docker-compose.yml`.
 - [x] Configuration d'un service API et d'un service PostgreSQL.
 - [x] Mise en place des volumes pour la persistance des données et des logs.
-- [ ] Migration du code vers une persistance SQL (en cours).
+- [x] Migration du code vers une persistance SQL (PostgreSQL).
+- [x] Optimisation du Dockerfile (Multi-stage build).
 
 ---
 
-## 🛠️ Installation et Lancement (Local)
+## Installation et Lancement (Local)
 
 ### Prérequis
 - Node.js (v18+)
 - npm
 - Docker
 
-### Installation & Lancement Classique
+### Lancement avec Docker Compose (Recommandé)
 1. Naviguer dans le dossier :
    ```bash
    cd devops/todo-api
    ```
-2. Installer les dépendances :
+2. Lancer les services :
    ```bash
-   npm install
-   ```
-3. Lancer :
-   ```bash
-   npm start
-   ```
-
-### Lancement avec Docker
-1. Build l'image :
-   ```bash
-   docker build -t todo-api:1.0 ./devops/todo-api
-   ```
-2. Lancer le conteneur :
-   ```bash
-   docker run -d -p 3000:3000 --name todo-container todo-api:1.0
+   docker-compose up -d
    ```
 L'API sera accessible sur `http://localhost:3000`.
 
 ---
 
-## 📡 API Endpoints (Résumé)
+## API Endpoints (Résumé)
 
 | Méthode | Endpoint | Description |
 |---------|----------|-------------|
@@ -100,8 +87,7 @@ L'API sera accessible sur `http://localhost:3000`.
 Pour ce projet solo, j'utilise une approche **Kanban** simplifiée pour suivre l'avancement des tâches :
 
 - **To Do** : Tests unitaires, Tests d'intégration, CI/CD Pipeline.
-- **In Progress** : Finalisation de la documentation.
-- **Done** : Initialisation API, Dockerisation, Orchestration Docker Compose, Persistance PostgreSQL.
+- **In Progress** : Finalisation de la documentation technique.
+- **Done** : Initialisation API, Dockerisation, Orchestration Docker Compose, Persistance PostgreSQL, Architecture Model-Route.
 
 *Note : Les itérations sont quotidiennes avec un "Daily Stand-up" personnel pour valider les objectifs du jour.*
-

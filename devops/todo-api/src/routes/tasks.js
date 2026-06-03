@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
-const db = require('../db');
+const Task = require('../models/task');
 
 // GET /api/tasks - Lister toutes les tâches
 router.get('/', async (req, res, next) => {
   try {
-    const { rows } = await db.query('SELECT * FROM tasks ORDER BY "createdAt" DESC');
-    res.json(rows);
+    const tasks = await Task.getAll();
+    res.json(tasks);
   } catch (err) {
     next(err);
   }
@@ -16,11 +16,11 @@ router.get('/', async (req, res, next) => {
 // GET /api/tasks/:id - Voir une tâche
 router.get('/:id', async (req, res, next) => {
   try {
-    const { rows } = await db.query('SELECT * FROM tasks WHERE id = $1', [req.params.id]);
-    if (rows.length === 0) {
+    const task = await Task.getById(req.params.id);
+    if (!task) {
       return res.status(404).json({ message: 'Task not found' });
     }
-    res.json(rows[0]);
+    res.json(task);
   } catch (err) {
     next(err);
   }
@@ -34,16 +34,16 @@ router.post('/', async (req, res, next) => {
     return res.status(400).json({ message: 'Title is required' });
   }
 
-  const id = uuidv4();
-  const createdAt = new Date();
-  const updatedAt = new Date();
-
   try {
-    const { rows } = await db.query(
-      'INSERT INTO tasks (id, title, description, status, "createdAt", "updatedAt") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-      [id, title, description || '', status || 'todo', createdAt, updatedAt]
-    );
-    res.status(201).json(rows[0]);
+    const newTask = await Task.create({
+      id: uuidv4(),
+      title,
+      description: description || '',
+      status: status || 'todo',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+    res.status(201).json(newTask);
   } catch (err) {
     next(err);
   }
@@ -54,25 +54,18 @@ router.put('/:id', async (req, res, next) => {
   const { title, description, status } = req.body;
 
   try {
-    // Check if task exists
-    const { rows: existingRows } = await db.query('SELECT * FROM tasks WHERE id = $1', [req.params.id]);
-    if (existingRows.length === 0) {
+    const existingTask = await Task.getById(req.params.id);
+    if (!existingTask) {
       return res.status(404).json({ message: 'Task not found' });
     }
 
-    const task = existingRows[0];
-    const updatedTask = {
-      title: title !== undefined ? title : task.title,
-      description: description !== undefined ? description : task.description,
-      status: status !== undefined ? status : task.status,
+    const updatedTask = await Task.update(req.params.id, {
+      title: title !== undefined ? title : existingTask.title,
+      description: description !== undefined ? description : existingTask.description,
+      status: status !== undefined ? status : existingTask.status,
       updatedAt: new Date()
-    };
-
-    const { rows } = await db.query(
-      'UPDATE tasks SET title = $1, description = $2, status = $3, "updatedAt" = $4 WHERE id = $5 RETURNING *',
-      [updatedTask.title, updatedTask.description, updatedTask.status, updatedTask.updatedAt, req.params.id]
-    );
-    res.json(rows[0]);
+    });
+    res.json(updatedTask);
   } catch (err) {
     next(err);
   }
@@ -81,8 +74,8 @@ router.put('/:id', async (req, res, next) => {
 // DELETE /api/tasks/:id - Supprimer une tâche
 router.delete('/:id', async (req, res, next) => {
   try {
-    const { rowCount } = await db.query('DELETE FROM tasks WHERE id = $1', [req.params.id]);
-    if (rowCount === 0) {
+    const deleted = await Task.delete(req.params.id);
+    if (!deleted) {
       return res.status(404).json({ message: 'Task not found' });
     }
     res.status(204).send();
