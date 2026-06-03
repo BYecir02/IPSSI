@@ -35,6 +35,11 @@ Ce projet consiste en la création d'une API REST de gestion de tâches (Todo Ap
 - [x] Déplacement de l'API et des ressources de cours dans `devops/`.
 - [x] Mise à jour de la documentation.
 
+### Étape 6 : Volumes Basiques (Exercice Pratique 1)
+- [x] Création d'un volume nommé (`todo-logs`).
+- [x] Validation de la persistance des données entre différents conteneurs.
+- [x] Test de survie des données après suppression des conteneurs.
+
 ---
 
 ## 🛠️ Installation et Lancement (Local)
