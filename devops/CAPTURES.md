@@ -1,7 +1,5 @@
 # Preuves DevOps - Todo API
 
-Ce document regroupe les sorties terminales démontrant le bon fonctionnement de l'infrastructure Docker et de l'API.
-
 ## 1. Versions des outils
 ```bash
 $ docker --version
