@@ -50,17 +50,26 @@ jobs:
 
   build-docker:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Build Docker image
+      - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
           context: devops/todo-api
-          push: false
-          tags: todo-api:latest
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USER }}/todo-api:latest
+            ${{ secrets.DOCKERHUB_USER }}/todo-api:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
