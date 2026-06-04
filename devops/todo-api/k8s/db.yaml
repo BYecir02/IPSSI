@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-db
+  labels:
+    app: todo-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-db
+  template:
+    metadata:
+      labels:
+        app: todo-db
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: todo_db
+        - name: POSTGRES_USER
+          value: todo_user
+        - name: POSTGRES_PASSWORD
+          value: todo_pass
+        volumeMounts:
+        - name: db-storage
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: db-storage
+        emptyDir: {} # Pour l'exercice, on utilise un stockage éphémère. En prod, on utiliserait un PVC.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-db
+spec:
+  selector:
+    app: todo-db
+  ports:
+  - protocol: TCP
+    port: 5432
+    targetPort: 5432

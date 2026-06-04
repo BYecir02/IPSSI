@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-api
+  labels:
+    app: todo-api
+spec:
+  replicas: 2 # Conformément aux exigences de la Phase 4
+  selector:
+    matchLabels:
+      app: todo-api
+  template:
+    metadata:
+      labels:
+        app: todo-api
+    spec:
+      containers:
+      - name: todo-api
+        image: byecir02/todo-api:latest # À mettre à jour via la CI
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DB_HOST
+          value: todo-db
+        - name: DB_USER
+          value: todo_user
+        - name: DB_PASSWORD
+          value: todo_pass
+        - name: DB_NAME
+          value: todo_db
+        - name: PORT
+          value: "3000"
+        # Ajout des sondes pour la Phase 6 (Optimisation)
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 15
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-api
+spec:
+  type: NodePort # Permet l'accès depuis l'extérieur du cluster K3S
+  selector:
+    app: todo-api
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+    nodePort: 30080 # L'API sera accessible sur http://<IP_K3S>:30080
