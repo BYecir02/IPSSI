@@ -81,3 +81,19 @@ L'API sera accessible sur `http://localhost:3000`.
 | DELETE| `/api/tasks/:id` | Supprimer une tâche |
 
 ---
+
+## 📅 Gestion de Projet (Agile/Solo)
+
+Pour ce projet solo, j'utilise une approche **Kanban** simplifiée pour suivre l'avancement des tâches :
+
+- **To Do** : (Aucune tâche en attente).
+- **In Progress** : Finalisation de la documentation technique.
+- **Done** : Initialisation API, Dockerisation, Orchestration Docker Compose, Persistance PostgreSQL, Architecture Model-Route, Tests unitaires et d'intégration, CI/CD Pipeline.
+
+*Note : Les itérations sont quotidiennes avec un "Daily Stand-up" personnel pour valider les objectifs du jour.*
+
+---
+
+## 📄 Preuves DevOps
+Les sorties terminales validant le fonctionnement du projet sont disponibles dans le fichier [devops/EVIDENCE.md](devops/EVIDENCE.md).
+
