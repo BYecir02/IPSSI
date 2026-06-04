@@ -4,7 +4,7 @@
 - Mohamed Yecir Badirou (@BYecir02)
 
 ## Image DockerHub
-`byecir02/todo-api`
+`byecir02/todo-api` (Image poussée automatiquement via la CI)
 
 ## Déploiement
 Voir [DEPLOYMENT.md](DEPLOYMENT.md)
