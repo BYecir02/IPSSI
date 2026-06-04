@@ -2,24 +2,42 @@ services:
   api:
     build: .
     ports:
-      - "3000:3000"
+      - "${PORT:-3000}:3000"
     volumes:
-      - ./src:/app/src     # Hot reload pour le dev
-      - api-logs:/app/logs  # Logs persistants
+      - ./src:/app/src
+      - api-logs:/app/logs
+    env_file:
+      - .env
     environment:
-      - NODE_ENV=development
+      - DB_HOST=db # Priorité sur le .env pour le nom de service interne
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      db:
+        condition: service_healthy
 
   db:
     image: postgres:15-alpine
-    environment:
-      POSTGRES_DB: todo_db
-      POSTGRES_USER: todo_user
-      POSTGRES_PASSWORD: todo_pass
+    env_file:
+      - .env
     volumes:
-      - postgres-data:/var/lib/postgresql/data  # Persistance BDD
+      - postgres-data:/var/lib/postgresql/data
     ports:
-      - "5433:5432"
+      - "5433:5432" # Gardé pour le debug local si besoin
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-todo_user} -d ${POSTGRES_DB:-todo_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+networks:
+  frontend:
+  backend:
 
 volumes:
-  postgres-data:  # Volume nommé géré par Docker
-  api-logs:       # Deuxième volume pour les logs
+  postgres-data:
+  api-logs:
